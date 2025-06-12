@@ -11,34 +11,9 @@ pool:
     - Agent.Name -equals Agennt
 
 steps:
-  - task: NodeTool@0
-    inputs:
-      versionSpec: '18.x'
-    displayName: 'Install Node.js'
-
-  - script: |
-      echo "Node.js version:"
-      node --version
-      echo "npm version:"
-      npm --version
-    displayName: 'Check Node.js and npm'
-
-  - script: |
-      echo "Installing dependencies..."
-      npm install
-    displayName: 'Install Dependencies'
-
-  - script: |
-      echo "Building app..."
-      npm run test
-    displayName: 'Build and Test'
-
-  - task: PublishPipelineArtifact@1
-    inputs:
-      targetPath: '$(Pipeline.Workspace)/s'
-      artifact: 'drop'
-
-#cbdsibweviub
-      publishLocation: 'pipeline'
-    displayName: 'Publish Artifact'
-#bcjkdsvbhjebcjdcbghfbgfbfsd
+- task: CmdLine@2
+  inputs:
+    script: |
+      echo Write your commands here
+      
+      echo Hello world
