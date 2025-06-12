@@ -5,7 +5,7 @@ pr: none
 resources:
   pipelines:
     - pipeline: 101
-      source:  Revati014.CICD  # Must match the CI pipeline namee
+      source: Revati014.CICD  # Must match the CI pipeline name
       trigger:
         branches:
           include:
@@ -24,3 +24,9 @@ steps:
       echo Write your commands here
       
       echo Hello world
+
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      Write-Host "Current Date and Time: $(Get-Date)"
