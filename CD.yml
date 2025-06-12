@@ -1,0 +1,47 @@
+name: SimpleCICD_CD
+trigger: none
+pr: none
+
+resources:
+  pipelines:
+    - pipeline: SimpleCICD_CI
+      source:  Revati014.SimpleCICDRepo  # Must match the CI pipeline namee
+      trigger:
+        branches:
+          include:
+            - main
+            - SimpleCICD_CD
+
+pool:
+  name: SelfHosted
+  demands:
+    - Agent.Name -equals Agent
+
+stages:
+  - stage: Deploy
+    displayName: 'CD: Deploy Stage'
+    jobs:
+      - job: DeployJob
+        steps:
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              source: 'specific'
+              pipeline: ciPipelineAlias
+              artifact: 'drop'
+              path: '$(Pipeline.Workspace)/drop'
+            displayName: 'Download CI Artifact'
+
+          - script: |
+              echo "Deploying application..."
+              dir $(Pipeline.Workspace)/drop
+            displayName: 'Deploy Step'
+
+          # Optional: Uncomment to deploy to Azure App Service
+          # - task: AzureWebApp@1
+          #   inputs:
+          #     azureSubscription: 'SimpleCICDAzureConnection'  # Your Azure service connectionnn
+          #     appType: 'webApp'
+          #     appName: 'SimpleCICDApp'  # Your App Service name
+          #     package: '$(Pipeline.Workspace)/drop'
+          #     startUpCommand: 'npm start'
+          #   displayName: 'Deploy to Azure App Service'
