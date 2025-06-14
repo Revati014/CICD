@@ -4,7 +4,7 @@ pr: none
 
 resources:
   pipelines:
-    - pipeline: 101
+    - pipeline:  Revati014.CICD
       source: Revati014.CICD  # Must match the CI pipeline name
       trigger:
         branches:
